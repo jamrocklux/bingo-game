@@ -1,0 +1,63 @@
+import React, { useState } from 'react';
+
+const bingoPhrases = [
+  "Has worked in more than 3 countries",
+  "Can speak 3 or more languages",
+  "Has conducted a virtual interview",
+  "Uses LinkedIn every day",
+  "Has recruited for a tech role",
+  "Knows someone who relocated for a job",
+  "Has hired someone from outside of Europe",
+  "Can name 5 European capitals",
+  "Has worked remotely for over a year",
+  "Favorite interview question is 'Tell me about yourself'",
+  "Has experience with employer branding",
+  "Uses an ATS (Applicant Tracking System)",
+  "Knows what 'EVP' stands for",
+  "Has conducted a panel interview",
+  "Uses data to make hiring decisions",
+  "Has had to fill a role urgently",
+  "Has conducted more than 20 interviews in one week",
+  "Has organized a recruitment event",
+  "Enjoys coaching hiring managers",
+  "Has encountered a 'ghosting' candidate",
+  "Uses psychometric assessments",
+  "Has been ghosted by a candidate",
+  "Prefers face-to-face interviews",
+  "Has led a diversity hiring initiative",
+  "Knows a good icebreaker question"
+];
+
+function BingoCard() {
+  const [marked, setMarked] = useState(Array(25).fill(false));
+
+  const toggleMark = (index) => {
+    const newMarked = [...marked];
+    newMarked[index] = !newMarked[index];
+    setMarked(newMarked);
+  };
+
+  const renderSquare = (phrase, index) => {
+    const isMarked = marked[index];
+    const isFreeSpace = index === 12;
+    return (
+      <div
+        key={index}
+        className={`flex items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ease-in-out text-center text-white ${isMarked ? 'bg-green-500' : 'bg-blue-500'} ${isFreeSpace ? 'bg-red-500 font-bold' : ''}`}
+        onClick={() => toggleMark(index)}
+      >
+        {isFreeSpace ? 'FREE SPACE' : phrase}
+      </div>
+    );
+  };
+
+  return (
+    <div className="grid grid-cols-5 gap-2 p-6 bg-gray-100 rounded-xl shadow-md">
+      {bingoPhrases.slice(0, 12).map((phrase, index) => renderSquare(phrase, index))}
+      {renderSquare('FREE SPACE', 12)}
+      {bingoPhrases.slice(12).map((phrase, index) => renderSquare(phrase, index + 13))}
+    </div>
+  );
+}
+
+export default BingoCard;
